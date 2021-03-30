@@ -36,3 +36,15 @@ libraryDependencies ++= Seq(
   "ch.qos.logback"    % "logback-classic"       % "1.2.3" % Runtime,
   //
 )
+
+enablePlugins(JavaAppPackaging)
+
+// heroku deployment configs
+herokuAppName in Compile := "kezek" // unique Heroku app name
+herokuJdkVersion in Compile := "1.8"
+herokuConfigVars in Compile := Map(
+  "HOST" -> "0.0.0.0"
+)
+herokuProcessTypes in Compile := Map(
+  "web" -> "target/universal/stage/bin/customer-core" // project name
+)
