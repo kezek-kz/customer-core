@@ -19,11 +19,13 @@ jobs:
           sbt clean compile
   deploy:
     name: deploy
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Run sbt stage deployHeroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          EVN: dev
         run: |
-          sbt -Denv=dev stage deployHeroku
+          sbt stage deployHeroku
