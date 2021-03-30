@@ -26,4 +26,4 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          sbt -DappEnv=prod stage deployHeroku
+          sbt -Denv=prod stage deployHeroku
