@@ -4,8 +4,19 @@ on:
   push:
     branches:
       - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run sbt clean compile
+        run: |
+          sbt clean compile
   deploy:
     name: deploy
     runs-on: ubuntu-latest
@@ -15,4 +26,4 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          sbt stage deployHeroku
+          sbt -DappEnv=dev stage deployHeroku
