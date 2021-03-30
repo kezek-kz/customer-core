@@ -26,6 +26,5 @@ jobs:
       - name: Run sbt stage deployHeroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          EVN: dev
         run: |
-          sbt stage deployHeroku
+          sbt -Denv=dev stage deployHeroku

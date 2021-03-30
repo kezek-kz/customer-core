@@ -43,9 +43,8 @@ enablePlugins(JavaAppPackaging)
 herokuAppName in Compile := Map(
   "prod"  -> "prod-kezek-customer-core",
   "dev" -> "dev-kezek-customer-core",
-).getOrElse(sys.env.getOrElse("ENV", "dev"), "dev-kezek-customer-core")
+).getOrElse(sys.props("env"), "dev-kezek-customer-core")
 
-herokuAppName in Compile := "" // unique Heroku app name
 herokuJdkVersion in Compile := "1.8"
 herokuConfigVars in Compile := Map(
   "HOST" -> "0.0.0.0"
