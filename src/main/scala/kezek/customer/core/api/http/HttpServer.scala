@@ -4,7 +4,9 @@ import akka.Done
 import akka.actor.CoordinatedShutdown
 import akka.actor.typed.ActorSystem
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.Directives._
 import com.typesafe.config.{Config, ConfigFactory}
+import kezek.customer.core.swagger.SwaggerSite
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.ExecutionContext
@@ -13,7 +15,7 @@ import scala.util.{Failure, Success}
 
 case class HttpServer()(implicit val actorSystem: ActorSystem[_],
                         implicit val executionContext: ExecutionContext)
-  extends HttpRoutes {
+  extends HttpRoutes with SwaggerSite {
 
   implicit val config: Config = ConfigFactory.load()
 
@@ -28,7 +30,10 @@ case class HttpServer()(implicit val actorSystem: ActorSystem[_],
         port = config.getInt("http-server.port")
       )
       .bind(
-        routes
+        concat (
+          routes,
+          swaggerSiteRoute
+        )
       )
       .onComplete {
         case Success(binding) =>
