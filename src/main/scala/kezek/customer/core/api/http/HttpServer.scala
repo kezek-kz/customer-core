@@ -5,6 +5,8 @@ import akka.actor.CoordinatedShutdown
 import akka.actor.typed.ActorSystem
 import akka.http.scaladsl.Http
 import com.typesafe.config.{Config, ConfigFactory}
+import kezek.customer.core.service.CustomerService
+import kezek.customer.core.swagger.{SwaggerDocService, SwaggerSite}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.ExecutionContext
@@ -12,8 +14,9 @@ import scala.concurrent.duration.DurationInt
 import scala.util.{Failure, Success}
 
 case class HttpServer()(implicit val actorSystem: ActorSystem[_],
-                        implicit val executionContext: ExecutionContext)
-  extends HttpRoutes {
+                        implicit val executionContext: ExecutionContext,
+                        implicit val customerService: CustomerService)
+  extends HttpRoutes with SwaggerSite {
 
   implicit val config: Config = ConfigFactory.load()
 
@@ -28,7 +31,7 @@ case class HttpServer()(implicit val actorSystem: ActorSystem[_],
         port = config.getInt("http-server.port")
       )
       .bind(
-        routes
+        concat (routes, swaggerSiteRoute, new SwaggerDocService().routes)
       )
       .onComplete {
         case Success(binding) =>

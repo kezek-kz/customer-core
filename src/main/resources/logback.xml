@@ -32,6 +32,7 @@
     <logger name="io.swagger" level="INFO" />
     <logger name="org.apache.kafka" level="INFO" />
     <logger name="org.mongodb" level="INFO" />
+    <logger name="org.mongodb.driver" level="WARN" />
     <logger name="scala.slick" level="INFO" />
     <logger name="slick" level="INFO" />
 

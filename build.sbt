@@ -1,3 +1,5 @@
+import scala.io.Source
+
 name := "customer-core"
 
 version := "0.1"
@@ -15,6 +17,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
   "com.typesafe.akka" %% "akka-protobuf-v3" % akkaVersion,
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+  //
+  "org.mongodb.scala" %% "mongo-scala-driver" % "4.2.0",
   //
   "javax.ws.rs"                  % "javax.ws.rs-api"       % "2.1.1",
   "com.github.swagger-akka-http" %% "swagger-akka-http"    % "2.0.5",
@@ -36,3 +40,39 @@ libraryDependencies ++= Seq(
   "ch.qos.logback"    % "logback-classic"       % "1.2.3" % Runtime,
   //
 )
+
+enablePlugins(JavaAppPackaging)
+
+// heroku deployment configs
+herokuAppName in Compile := Map(
+  "prod"  -> "prod-kezek-customer-core",
+  "dev" -> "dev-kezek-customer-core",
+)(sys.props.getOrElse("env", "dev"))
+
+herokuJdkVersion in Compile := "1.8"
+
+val devVars = Map(
+  "LOG_LEVEL" -> "DEBUG",
+  "MONGO_CONNECTION_STRING" -> "mongodb+srv://admin:wqFerF1zogVVnyAO@cluster0.l04gc.mongodb.net",
+  "MONGO_DATABASE" -> "dev_kezek",
+  "MONGO_CUSTOMER_COLLECTION" -> "customer",
+  "HOST" -> "0.0.0.0",
+  "SWAGGER_HOST" -> "",
+  "SWAGGER_SCHEMES" -> "https",
+  "ENV" -> "dev",
+)
+val prodVars = Map(
+  "LOG_LEVEL" -> "DEBUG",
+  "MONGO_CONNECTION_STRING" -> "mongodb+srv://admin:wqFerF1zogVVnyAO@cluster0.l04gc.mongodb.net",
+  "MONGO_DATABASE" -> "prod_kezek",
+  "MONGO_CUSTOMER_COLLECTION" -> "customer",
+  "HOST" -> "0.0.0.0",
+  "SWAGGER_HOST" -> "",
+  "SWAGGER_SCHEMES" -> "https",
+  "ENV" -> "dev",
+)
+
+herokuConfigVars in Compile := Map(
+  "prod" -> prodVars,
+  "dev" -> devVars
+)(sys.props.getOrElse("env", "dev"))
