@@ -50,29 +50,3 @@ herokuAppName in Compile := Map(
 )(sys.props.getOrElse("env", "dev"))
 
 herokuJdkVersion in Compile := "1.8"
-
-val devVars = Map(
-  "LOG_LEVEL" -> "DEBUG",
-  "MONGO_CONNECTION_STRING" -> "mongodb+srv://admin:wqFerF1zogVVnyAO@cluster0.l04gc.mongodb.net",
-  "MONGO_DATABASE" -> "dev_kezek",
-  "MONGO_CUSTOMER_COLLECTION" -> "customer",
-  "HOST" -> "0.0.0.0",
-  "SWAGGER_HOST" -> "",
-  "SWAGGER_SCHEMES" -> "https",
-  "ENV" -> "dev",
-)
-val prodVars = Map(
-  "LOG_LEVEL" -> "DEBUG",
-  "MONGO_CONNECTION_STRING" -> "mongodb+srv://admin:wqFerF1zogVVnyAO@cluster0.l04gc.mongodb.net",
-  "MONGO_DATABASE" -> "prod_kezek",
-  "MONGO_CUSTOMER_COLLECTION" -> "customer",
-  "HOST" -> "0.0.0.0",
-  "SWAGGER_HOST" -> "",
-  "SWAGGER_SCHEMES" -> "https",
-  "ENV" -> "dev",
-)
-
-herokuConfigVars in Compile := Map(
-  "prod" -> prodVars,
-  "dev" -> devVars
-)(sys.props.getOrElse("env", "dev"))
