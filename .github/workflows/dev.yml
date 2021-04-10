@@ -36,5 +36,5 @@ jobs:
           SWAGGER_SCHEMES: https,
           ENV: dev,
         run: |
-          echo HEROKU_API_KEY
+          echo $HEROKU_API_KEY
           sbt -Denv=dev stage deployHeroku
