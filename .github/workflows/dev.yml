@@ -29,7 +29,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}},
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}},
           LOG_LEVEL: DEBUG,
-          MONGO_CONNECTION_STRING: $${{secrets.MONGO_CONNECTION_STRING}},
+          MONGO_CONNECTION_STRING: ${{secrets.MONGO_CONNECTION_STRING}},
           MONGO_DATABASE: dev_kezek,
           MONGO_CUSTOMER_COLLECTION: customer,
           HOST: 0.0.0.0,
