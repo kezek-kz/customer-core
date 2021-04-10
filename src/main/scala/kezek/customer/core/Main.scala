@@ -19,10 +19,10 @@ object Main extends App {
     config
   )
 
-  implicit val mongoClient: MongoClient = MongoClient(config.getString("db.mongo.connection-string"))
-
   implicit val classicSystem: akka.actor.ActorSystem = system.classicSystem
   implicit val executionContext: ExecutionContext = classicSystem.dispatchers.lookup("akka.dispatchers.main")
+
+  implicit val mongoClient: MongoClient = MongoClient(config.getString("db.mongo.connection-string"))
 
   implicit val customerService: CustomerService = new CustomerService()
 
