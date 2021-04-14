@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Run sbt stage deployHeroku
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }},
 #          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }},
 #          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }},
 #          LOG_LEVEL: DEBUG,
@@ -34,6 +34,6 @@ jobs:
 #          MONGO_CUSTOMER_COLLECTION: customer,
 #          HOST: 0.0.0.0,
 #          SWAGGER_SCHEMES: https,
-#          ENV: dev
+          ENV: dev
         run: |
           sbt -Denv=dev stage deployHeroku
