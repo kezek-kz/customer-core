@@ -34,6 +34,7 @@ jobs:
           MONGO_CUSTOMER_COLLECTION: customer
           HOST: 0.0.0.0
           SWAGGER_SCHEMES: https
+          SWAGGER_HOST: dev-kezek-customer-core.herokuapp.com
           ENV: dev
         run: |
           sbt -Denv=dev stage deployHeroku
