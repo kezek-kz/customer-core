@@ -9,12 +9,12 @@ import kezek.customer.core.api.http.route.CustomerHttpRoutes
 
 import javax.ws.rs.{GET, Path}
 
-@Path("/api/v1")
+@Path("/api")
 trait HttpRoutes
   extends CustomerHttpRoutes {
 
   val routes: Route =
-    pathPrefix("api" / "v1") {
+    pathPrefix("api") {
       concat(
         healthcheck,
         customerHttpRoutes
